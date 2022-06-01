@@ -18,6 +18,8 @@ kotlin {
     }
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdk 32
@@ -33,6 +35,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "API_KEY", "\"" + localProperties['apiKey'] + "\""
     }
 
     buildTypes {
@@ -118,6 +122,7 @@ dependencies {
     // Accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.7-alpha"
     implementation "com.google.accompanist:accompanist-insets:0.24.7-alpha"
+    implementation "com.google.accompanist:accompanist-coil:0.24.7-alpha"
 
     // LocalDateTime
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'
@@ -125,4 +130,12 @@ dependencies {
     // Compose Nav Destinations
     implementation 'io.github.raamcosta.compose-destinations:core:1.5.2-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.5.2-beta'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    // ExoPlayer
+    implementation "com.google.android.exoplayer:exoplayer:2.17.1"
+    implementation "com.google.android.exoplayer:extension-mediasession:2.17.1"
 }
