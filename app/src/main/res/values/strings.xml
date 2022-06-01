@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Podcast App</string>
+    <string name="couldnt_load_podcasts">Couldn\'t load podcasts</string>
 </resources>
