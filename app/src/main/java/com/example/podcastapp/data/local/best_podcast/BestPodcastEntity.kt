@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class BestPodcastEntity(
     val country: String = "",
     val description: String = "",
-    val website: String = "",
+    val website: String? = "",
     val image: String = "",
     val language: String = "",
     val publisher: String = "",
@@ -18,7 +18,6 @@ data class BestPodcastEntity(
     val explicitContent: Boolean = false,
     val audioLengthSec: Int = 0,
     val listenNotesUrl: String = "",
-    val listenScore: Int = 0,
     @PrimaryKey
     val id: String = "",
 )

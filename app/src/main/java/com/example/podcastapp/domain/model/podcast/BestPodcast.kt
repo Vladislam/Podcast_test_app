@@ -4,7 +4,7 @@ package com.example.podcastapp.domain.model.podcast
 data class BestPodcast(
     val country: String,
     val description: String,
-    val website: String,
+    val website: String?,
     val id: String,
     val image: String,
     val language: String,
@@ -16,5 +16,4 @@ data class BestPodcast(
     val explicitContent: Boolean,
     val audioLengthSec: Int,
     val listenNotesUrl: String,
-    val listenScore: Int,
 )

@@ -55,7 +55,6 @@ fun BestPodcastEntity.toBestPodcast(): BestPodcast = BestPodcast(
     explicitContent = explicitContent,
     audioLengthSec = audioLengthSec,
     listenNotesUrl = listenNotesUrl,
-    listenScore = listenScore
 )
 
 fun BestPodcastDto.toBestPodcast(): BestPodcast = BestPodcast(
@@ -73,7 +72,6 @@ fun BestPodcastDto.toBestPodcast(): BestPodcast = BestPodcast(
     explicitContent = explicitContent,
     audioLengthSec = audioLengthSec,
     listenNotesUrl = listenNotesUrl,
-    listenScore = listenScore
 )
 
 fun BestPodcastDto.toBestPodcastEntity(): BestPodcastEntity = BestPodcastEntity(
@@ -91,7 +89,6 @@ fun BestPodcastDto.toBestPodcastEntity(): BestPodcastEntity = BestPodcastEntity(
     explicitContent = explicitContent,
     audioLengthSec = audioLengthSec,
     listenNotesUrl = listenNotesUrl,
-    listenScore = listenScore
 )
 
 fun BestPodcastsResponseDto.toBestPodcasts(): BestPodcastsResponse = BestPodcastsResponse(

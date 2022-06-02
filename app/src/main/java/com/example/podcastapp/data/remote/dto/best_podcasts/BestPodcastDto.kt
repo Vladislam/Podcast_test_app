@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class BestPodcastDto(
     val country: String,
     val description: String,
-    val website: String,
+    val website: String?,
     val id: String,
     val image: String,
     val language: String,
@@ -23,6 +23,4 @@ data class BestPodcastDto(
     val audioLengthSec: Int,
     @SerializedName("listennotes_url")
     val listenNotesUrl: String,
-    @SerializedName("listen_score")
-    val listenScore: Int,
 )
