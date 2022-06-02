@@ -1,44 +1,35 @@
 package com.example.podcastapp.data.mapper
 
-import com.example.podcastapp.data.remote.dto.EpisodeDto
-import com.example.podcastapp.data.remote.dto.PodcastDto
-import com.example.podcastapp.data.remote.dto.PodcastSearchDto
-import com.example.podcastapp.domain.model.Episode
-import com.example.podcastapp.domain.model.Podcast
-import com.example.podcastapp.domain.model.PodcastSearch
+import com.example.podcastapp.data.local.best_podcast.BestPodcastEntity
+import com.example.podcastapp.data.remote.dto.best_podcasts.BestPodcastDto
+import com.example.podcastapp.data.remote.dto.best_podcasts.BestPodcastsResponseDto
+import com.example.podcastapp.data.remote.dto.search_podcast.EpisodeDto
+import com.example.podcastapp.data.remote.dto.search_podcast.PodcastDto
+import com.example.podcastapp.data.remote.dto.search_podcast.PodcastSearchDto
+import com.example.podcastapp.domain.model.podcast.*
 
 fun EpisodeDto.toEpisode(): Episode = Episode(
     audio = audio,
     audioLengthSec = audioLengthSec,
-    descriptionHighlighted = descriptionHighlighted,
     descriptionOriginal = descriptionOriginal,
     explicitContent = explicitContent,
-    guidFromRss = guidFromRss,
     id = id,
     image = image,
-    itunesId = itunesId,
     link = link,
     listenNotesUrl = listenNotesUrl,
     podcast = podcast.toPodcast(),
     pubDateMs = pubDateMs,
-    rss = rss,
     thumbnail = thumbnail,
-    titleHighlighted = titleHighlighted,
     titleOriginal = titleOriginal,
-    transcriptsHighlighted = transcriptsHighlighted
 )
 
 fun PodcastDto.toPodcast(): Podcast = Podcast(
-    genreIds = genreIds,
     id = id,
     image = image,
-    listenScore = listenScore,
-    listenScoreGlobalRank = listenScoreGlobalRank,
     listenNotesUrl = listenNotesUrl,
     publisherHighlighted = publisherHighlighted,
     publisherOriginal = publisherOriginal,
     thumbnail = thumbnail,
-    titleHighlighted = titleHighlighted,
     titleOriginal = titleOriginal
 )
 
@@ -46,6 +37,72 @@ fun PodcastSearchDto.toPodcastSearch(): PodcastSearch = PodcastSearch(
     count = count,
     nextOffset = nextOffset,
     episodes = episodes.map { it.toEpisode() },
-    took = took,
     total = total
+)
+
+fun BestPodcastEntity.toBestPodcast(): BestPodcast = BestPodcast(
+    country = country,
+    description = description,
+    website = website,
+    id = id,
+    image = image,
+    language = language,
+    publisher = publisher,
+    thumbnail = thumbnail,
+    title = title,
+    totalEpisodes = totalEpisodes,
+    earliestPubDateMs = earliestPubDateMs,
+    explicitContent = explicitContent,
+    audioLengthSec = audioLengthSec,
+    listenNotesUrl = listenNotesUrl,
+    listenScore = listenScore
+)
+
+fun BestPodcastDto.toBestPodcast(): BestPodcast = BestPodcast(
+    country = country,
+    description = description,
+    website = website,
+    id = id,
+    image = image,
+    language = language,
+    publisher = publisher,
+    thumbnail = thumbnail,
+    title = title,
+    totalEpisodes = totalEpisodes,
+    earliestPubDateMs = earliestPubDateMs,
+    explicitContent = explicitContent,
+    audioLengthSec = audioLengthSec,
+    listenNotesUrl = listenNotesUrl,
+    listenScore = listenScore
+)
+
+fun BestPodcastDto.toBestPodcastEntity(): BestPodcastEntity = BestPodcastEntity(
+    country = country,
+    description = description,
+    website = website,
+    id = id,
+    image = image,
+    language = language,
+    publisher = publisher,
+    thumbnail = thumbnail,
+    title = title,
+    totalEpisodes = totalEpisodes,
+    earliestPubDateMs = earliestPubDateMs,
+    explicitContent = explicitContent,
+    audioLengthSec = audioLengthSec,
+    listenNotesUrl = listenNotesUrl,
+    listenScore = listenScore
+)
+
+fun BestPodcastsResponseDto.toBestPodcasts(): BestPodcastsResponse = BestPodcastsResponse(
+    podcasts = podcasts.map { it.toBestPodcast() },
+    id = id,
+    name = name,
+    total = total,
+    hasNext = hasNext,
+    hasPrevious = hasPrevious,
+    listenNotesUrl = listenNotesUrl,
+    nextPageNumber = nextPageNumber,
+    pageNumber = pageNumber,
+    previousPageNumber = previousPageNumber
 )
