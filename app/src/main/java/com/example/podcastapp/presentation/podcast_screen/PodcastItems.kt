@@ -30,7 +30,7 @@ fun BestPodcastItem(
             aspectRatio = 1f
         )
         Text(
-            podcast.title,
+            text = podcast.title,
             style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(8.dp)
         )
