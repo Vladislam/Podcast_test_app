@@ -3,7 +3,7 @@ package com.example.podcastapp.data.remote.dto.search_podcast
 
 import com.google.gson.annotations.SerializedName
 
-data class PodcastDto(
+data class SearchPodcastDto(
     val id: String,
     val image: String,
     val thumbnail: String,

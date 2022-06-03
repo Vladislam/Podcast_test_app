@@ -9,9 +9,10 @@ import com.example.podcastapp.data.mapper.toPodcastSearch
 import com.example.podcastapp.data.remote.PodcastApi
 import com.example.podcastapp.domain.model.UiText
 import com.example.podcastapp.domain.model.podcast.BestPodcastsResponse
-import com.example.podcastapp.domain.model.podcast.PodcastSearch
+import com.example.podcastapp.domain.model.podcast.SearchPodcastsResponse
 import com.example.podcastapp.domain.repository.PodcastRepository
 import com.example.podcastapp.util.Resource
+import com.example.podcastapp.util.consts.Constants.SEARCH_TYPE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -26,9 +27,9 @@ class PodcastRepositoryImpl @Inject constructor(
     override suspend fun searchPodcasts(
         query: String,
         offset: Int
-    ): Resource<PodcastSearch> {
+    ): Resource<SearchPodcastsResponse> {
         return try {
-            val response = api.searchPodcasts(query, offset)
+            val response = api.searchPodcasts(query, offset, SEARCH_TYPE)
             Resource.Success(response.toPodcastSearch())
         } catch (e: Exception) {
             Resource.Error(UiText.StringResource(R.string.couldnt_load_podcasts))

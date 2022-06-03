@@ -1,9 +1,9 @@
 package com.example.podcastapp.domain.model.podcast
 
 
-data class PodcastSearch(
+data class SearchPodcastsResponse(
     val count: Int,
     val total: Int,
     val nextOffset: Int,
-    val episodes: List<Episode>,
+    val podcasts: List<SearchPodcast>,
 )
