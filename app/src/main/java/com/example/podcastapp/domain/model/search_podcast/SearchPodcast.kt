@@ -1,4 +1,4 @@
-package com.example.podcastapp.domain.model.podcast
+package com.example.podcastapp.domain.model.search_podcast
 
 
 data class SearchPodcast(

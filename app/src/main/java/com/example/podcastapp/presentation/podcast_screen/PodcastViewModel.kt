@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.podcastapp.domain.model.podcast.BestPodcastsResponse
+import com.example.podcastapp.domain.model.best_podcast.BestPodcastsResponse
 import com.example.podcastapp.domain.repository.PodcastRepository
 import com.example.podcastapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

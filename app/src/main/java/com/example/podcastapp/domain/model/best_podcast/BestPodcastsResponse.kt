@@ -1,4 +1,4 @@
-package com.example.podcastapp.domain.model.podcast
+package com.example.podcastapp.domain.model.best_podcast
 
 data class BestPodcastsResponse(
     val podcasts: List<BestPodcast>,

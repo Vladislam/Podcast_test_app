@@ -2,14 +2,12 @@ package com.example.podcastapp.data.repository
 
 import com.example.podcastapp.R
 import com.example.podcastapp.data.local.PodcastDatabase
-import com.example.podcastapp.data.mapper.toBestPodcast
-import com.example.podcastapp.data.mapper.toBestPodcastEntity
-import com.example.podcastapp.data.mapper.toBestPodcasts
-import com.example.podcastapp.data.mapper.toPodcastSearch
+import com.example.podcastapp.data.mapper.*
 import com.example.podcastapp.data.remote.PodcastApi
 import com.example.podcastapp.domain.model.UiText
-import com.example.podcastapp.domain.model.podcast.BestPodcastsResponse
-import com.example.podcastapp.domain.model.podcast.SearchPodcastsResponse
+import com.example.podcastapp.domain.model.best_podcast.BestPodcastsResponse
+import com.example.podcastapp.domain.model.podcast.Podcast
+import com.example.podcastapp.domain.model.search_podcast.SearchPodcastsResponse
 import com.example.podcastapp.domain.repository.PodcastRepository
 import com.example.podcastapp.util.Resource
 import com.example.podcastapp.util.consts.Constants.SEARCH_TYPE
@@ -66,6 +64,52 @@ class PodcastRepositoryImpl @Inject constructor(
                     podcastDb.bestPodcastDao.deleteAll()
                 podcastDb.bestPodcastDao.insert(podcasts.podcasts.map { it.toBestPodcastEntity() })
                 emit(Resource.Success(podcasts.toBestPodcasts()))
+            }
+            emit(Resource.Loading(false))
+        }
+    }
+
+    override suspend fun getPodcastWithEpisodes(
+        fetchFromRemote: Boolean,
+        podcastId: String,
+        nextEpisodePubDate: Long,
+    ): Flow<Resource<Podcast>> {
+        return flow {
+            emit(Resource.Loading(true))
+            val localPodcastWithEpisodes = podcastDb.podcastDao.getPodcastWithEpisodes(podcastId)
+            val isDbEmpty =
+                localPodcastWithEpisodes == null || localPodcastWithEpisodes.episodes.isEmpty()
+
+            if (!isDbEmpty)
+                localPodcastWithEpisodes?.let { emit(Resource.Success(it.toPodcast())) }
+
+            val loadFromCache = !isDbEmpty && !fetchFromRemote
+            if (loadFromCache) {
+                emit(Resource.Loading(false))
+                return@flow
+            }
+
+            val remotePodcast = try {
+                api.getPodcastWitEpisodes(podcastId, nextEpisodePubDate)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Resource.Error(UiText.StringResource(R.string.couldnt_load_podcasts)))
+                null
+            }
+
+            remotePodcast?.let { remote ->
+                if (nextEpisodePubDate == localPodcastWithEpisodes?.podcast?.nextEpisodePubDate) {
+                    podcastDb.podcastDao.insertEpisodes(remote.episodes.map { it.toEpisodeEntity() })
+                    emit(
+                        Resource.Success(
+                            remote.toPodcast().also { podcast ->
+                                podcast.episodes.toMutableList()
+                                    .addAll(localPodcastWithEpisodes.episodes.map { it.toEpisode() })
+                            })
+                    )
+                } else {
+                    emit(Resource.Success(remote.toPodcast()))
+                }
             }
             emit(Resource.Loading(false))
         }

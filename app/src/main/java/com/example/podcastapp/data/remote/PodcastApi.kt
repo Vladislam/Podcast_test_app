@@ -33,6 +33,6 @@ interface PodcastApi {
     @GET(PODCASTS)
     suspend fun getPodcastWitEpisodes(
         @Path("id") id: String,
-        @Query("next_episode_pub_date") nextEpisodePubDate: Int,
+        @Query("next_episode_pub_date") nextEpisodePubDate: Long,
     ): PodcastResponseDto
 }

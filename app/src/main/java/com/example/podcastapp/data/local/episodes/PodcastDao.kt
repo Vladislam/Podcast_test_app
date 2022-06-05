@@ -21,7 +21,7 @@ interface PodcastDao {
     suspend fun updateEpisode(episode: EpisodeEntity)
 
     @Query("SELECT * FROM PodcastEntity WHERE id = :podcastId")
-    suspend fun getPodcastWithEpisodes(podcastId: String): PodcastWithEpisodes
+    fun getPodcastWithEpisodes(podcastId: String): PodcastWithEpisodes?
 
     @Query("SELECT * FROM PodcastEntity")
     suspend fun getPodcasts(): List<PodcastEntity>

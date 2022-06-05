@@ -3,8 +3,8 @@ package com.example.podcastapp.data.mapper
 import com.example.podcastapp.data.local.best_podcast.BestPodcastEntity
 import com.example.podcastapp.data.remote.dto.best_podcasts.BestPodcastDto
 import com.example.podcastapp.data.remote.dto.best_podcasts.BestPodcastsResponseDto
-import com.example.podcastapp.domain.model.podcast.BestPodcast
-import com.example.podcastapp.domain.model.podcast.BestPodcastsResponse
+import com.example.podcastapp.domain.model.best_podcast.BestPodcast
+import com.example.podcastapp.domain.model.best_podcast.BestPodcastsResponse
 
 
 fun BestPodcastEntity.toBestPodcast(): BestPodcast = BestPodcast(

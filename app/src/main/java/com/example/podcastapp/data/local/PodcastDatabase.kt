@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.podcastapp.data.local.best_podcast.BestPodcastDao
 import com.example.podcastapp.data.local.best_podcast.BestPodcastEntity
+import com.example.podcastapp.data.local.episodes.PodcastDao
 
 @Database(
     entities = [BestPodcastEntity::class],
@@ -13,6 +14,7 @@ import com.example.podcastapp.data.local.best_podcast.BestPodcastEntity
 abstract class PodcastDatabase : RoomDatabase() {
 
     abstract val bestPodcastDao: BestPodcastDao
+    abstract val podcastDao: PodcastDao
 
     companion object {
         const val DB_NAME = "podcast.db"

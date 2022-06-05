@@ -10,20 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.example.podcastapp.domain.model.podcast.BestPodcast
+import com.example.podcastapp.domain.model.best_podcast.BestPodcast
 import com.example.podcastapp.ui.common.PodcastImage
 
 @Composable
 fun BestPodcastItem(
     podcast: BestPodcast,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: (podcastId: String) -> Unit
 ) {
     Column(
         modifier = modifier
             .clip(MaterialTheme.shapes.medium)
             .background(MaterialTheme.colors.background)
-            .clickable(onClick = onClick),
+            .clickable(onClick = { onClick(podcast.id) }),
     ) {
         PodcastImage(
             url = podcast.thumbnail,
