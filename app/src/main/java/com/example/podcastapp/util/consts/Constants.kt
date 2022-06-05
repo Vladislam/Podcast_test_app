@@ -8,4 +8,6 @@ object Constants {
     val BOTTOM_NAVIGATION_HEIGHT = 56.dp
 
     const val SEARCH_TYPE = "podcast"
+
+    const val PODCAST_ID_SAVED_STATE_TAG = "podcastId"
 }
