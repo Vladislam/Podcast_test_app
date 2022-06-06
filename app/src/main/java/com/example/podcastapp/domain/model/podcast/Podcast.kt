@@ -10,8 +10,10 @@ data class Podcast(
     val image: String = "",
     val language: String = "",
     val publisher: String = "",
+    val listenNotesUrl: String = "",
     val explicitContent: Boolean = false,
     val nextEpisodePubDate: Long = 0L,
+    val firstPubDateMs: Long = 0L,
     val totalEpisodes: Int = 0,
     val audioLengthSec: Int = 0,
 )

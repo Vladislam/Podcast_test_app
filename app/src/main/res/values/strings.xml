@@ -7,4 +7,6 @@
     <string name="couldnt_load_genres">Couldn\'t load genres</string>
     <string name="podcast_thumbnail">Podcast thumbnail</string>
     <string name="trending_now">Trending Now</string>
+    <string name="minutes_template">%s min</string>
+    <string name="share">Share</string>
 </resources>

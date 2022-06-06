@@ -11,10 +11,12 @@ data class PodcastEntity(
     val image: String = "",
     val language: String = "",
     val explicitContent: Boolean = false,
-    val nextEpisodePubDate: Long = 0,
+    val nextEpisodePubDate: Long = 0L,
     val totalEpisodes: Int = 0,
     val audioLengthSec: Int = 0,
     val publisher: String = "",
+    val listenNotesUrl: String = "",
+    val firstPubDateMs: Long = 0L,
     @PrimaryKey
     val id: String = "",
 )

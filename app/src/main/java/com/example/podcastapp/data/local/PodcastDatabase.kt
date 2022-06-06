@@ -10,7 +10,7 @@ import com.example.podcastapp.data.local.episodes.PodcastEntity
 
 @Database(
     entities = [PodcastEntity::class, EpisodeEntity::class, BestPodcastEntity::class],
-    version = 5,
+    version = 7,
     exportSchema = false
 )
 abstract class PodcastDatabase : RoomDatabase() {
