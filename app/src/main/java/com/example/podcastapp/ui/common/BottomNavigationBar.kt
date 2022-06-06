@@ -2,6 +2,9 @@ package com.example.podcastapp.ui.common
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,44 +32,51 @@ import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 fun BottomNavigationBar(
     navController: NavController,
     modifier: Modifier = Modifier,
+    bottomBarState: Boolean = true,
 ) {
     val currentDestination: Destination = navController.appCurrentDestinationAsState().value
         ?: NavGraphs.root.startAppDestination
 
-    BottomNavigation(
-        modifier = modifier,
-        backgroundColor = Color.Transparent
+    AnimatedVisibility(
+        visible = bottomBarState,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
     ) {
-        Row(
-            modifier = Modifier
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            MaterialTheme.colors.background.copy(alpha = 0.70f),
-                            MaterialTheme.colors.background,
+        BottomNavigation(
+            modifier = modifier,
+            backgroundColor = Color.Transparent
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                MaterialTheme.colors.background.copy(alpha = 0.70f),
+                                MaterialTheme.colors.background,
+                            )
                         )
                     )
-                )
-                .then(modifier),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BottomBarDestination.values().forEach { destination ->
-                BottomNavigationItem(
-                    selected = currentDestination == destination.direction,
-                    onClick = {
-                        navController.navigateTo(destination.direction) {
-                            launchSingleTop = true
-                        }
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = destination.icon),
-                            contentDescription = stringResource(id = destination.label)
-                        )
-                    },
-                    label = { Text(stringResource(id = destination.label)) }
-                )
+                    .then(modifier),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BottomBarDestination.values().forEach { destination ->
+                    BottomNavigationItem(
+                        selected = currentDestination == destination.direction,
+                        onClick = {
+                            navController.navigateTo(destination.direction) {
+                                launchSingleTop = true
+                            }
+                        },
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = destination.icon),
+                                contentDescription = stringResource(id = destination.label)
+                            )
+                        },
+                        label = { Text(stringResource(id = destination.label)) }
+                    )
+                }
             }
         }
     }

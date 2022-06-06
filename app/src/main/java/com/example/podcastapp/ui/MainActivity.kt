@@ -11,10 +11,17 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.podcastapp.NavGraphs
+import com.example.podcastapp.appCurrentDestinationAsState
+import com.example.podcastapp.destinations.*
+import com.example.podcastapp.startAppDestination
 import com.example.podcastapp.ui.common.BottomNavigationBar
 import com.example.podcastapp.ui.theme.PodcastAppTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -37,6 +44,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PodcastApp() {
     val navController = rememberNavController()
+    var showBottomBar by rememberSaveable {
+        mutableStateOf(true)
+    }
+    val currentDestination: Destination = navController.appCurrentDestinationAsState().value
+        ?: NavGraphs.root.startAppDestination
+
+    showBottomBar = when (currentDestination) {
+        PodcastScreenDestination -> true
+        SavedScreenDestination -> true
+        SettingsScreenDestination -> true
+        PodcastDetailScreenDestination -> false
+    }
 
     PodcastAppTheme {
         Scaffold(
@@ -46,7 +65,12 @@ fun PodcastApp() {
                 .imePadding()
                 .fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
-            bottomBar = { BottomNavigationBar(navController = navController) }
+            bottomBar = {
+                BottomNavigationBar(
+                    navController = navController,
+                    bottomBarState = showBottomBar
+                )
+            }
         ) {
             DestinationsNavHost(navController = navController, navGraph = NavGraphs.root)
         }

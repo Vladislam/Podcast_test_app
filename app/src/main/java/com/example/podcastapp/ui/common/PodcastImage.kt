@@ -57,3 +57,8 @@ fun PodcastImage(
         }
     }
 }
+
+@Composable
+fun PodcastPoster(url: String, modifier: Modifier = Modifier) {
+
+}

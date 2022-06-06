@@ -31,9 +31,5 @@ fun PodcastDetailScreen(
         items(podcastState.podcast.episodes.size) { i ->
             EpisodeItem(episode = podcastState.podcast.episodes[i], onClick = {})
         }
-
-        item {
-            Spacer(modifier = Modifier.height(Constants.BOTTOM_NAVIGATION_HEIGHT))
-        }
     }
 }
