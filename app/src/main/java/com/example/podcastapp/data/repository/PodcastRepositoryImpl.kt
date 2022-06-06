@@ -72,7 +72,7 @@ class PodcastRepositoryImpl @Inject constructor(
     override suspend fun getPodcastWithEpisodes(
         fetchFromRemote: Boolean,
         podcastId: String,
-        nextEpisodePubDate: Long,
+        nextEpisodePubDate: Long?,
     ): Flow<Resource<Podcast>> {
         return flow {
             emit(Resource.Loading(true))
@@ -98,8 +98,8 @@ class PodcastRepositoryImpl @Inject constructor(
             }
 
             remotePodcast?.let { remote ->
-                if (nextEpisodePubDate == localPodcastWithEpisodes?.podcast?.nextEpisodePubDate) {
-                    podcastDb.podcastDao.insertEpisodes(remote.episodes.map { it.toEpisodeEntity() })
+                podcastDb.podcastDao.insertEpisodes(remote.episodes.map { it.toEpisodeEntity(remote.id) })
+                if (localPodcastWithEpisodes != null && nextEpisodePubDate == localPodcastWithEpisodes.podcast.nextEpisodePubDate) {
                     emit(
                         Resource.Success(
                             remote.toPodcast().also { podcast ->
@@ -108,6 +108,7 @@ class PodcastRepositoryImpl @Inject constructor(
                             })
                     )
                 } else {
+                    podcastDb.podcastDao.insertPodcast(remote.toPodcastEntity())
                     emit(Resource.Success(remote.toPodcast()))
                 }
             }

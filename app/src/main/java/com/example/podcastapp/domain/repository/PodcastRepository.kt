@@ -22,6 +22,6 @@ interface PodcastRepository {
     suspend fun getPodcastWithEpisodes(
         fetchFromRemote: Boolean,
         podcastId: String,
-        nextEpisodePubDate: Long,
+        nextEpisodePubDate: Long?,
     ): Flow<Resource<Podcast>>
 }

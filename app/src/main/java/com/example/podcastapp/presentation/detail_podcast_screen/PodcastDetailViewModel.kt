@@ -22,12 +22,12 @@ class PodcastDetailViewModel @Inject constructor(
     var podcastState by mutableStateOf(PodcastDetailState())
 
     init {
-
+        loadPodcastWithEpisodes(false, null)
     }
 
     private fun loadPodcastWithEpisodes(
         fetchFromRemote: Boolean,
-        nextEpisodePubDate: Long,
+        nextEpisodePubDate: Long?,
     ) = viewModelScope.launch {
         val podcastId = savedStateHandle.get<String>(PODCAST_ID_SAVED_STATE_TAG) ?: return@launch
         repository.getPodcastWithEpisodes(fetchFromRemote, podcastId, nextEpisodePubDate)

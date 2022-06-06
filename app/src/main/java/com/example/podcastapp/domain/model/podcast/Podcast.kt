@@ -9,6 +9,7 @@ data class Podcast(
     val episodes: List<Episode> = emptyList(),
     val image: String = "",
     val language: String = "",
+    val publisher: String = "",
     val explicitContent: Boolean = false,
     val nextEpisodePubDate: Long = 0L,
     val totalEpisodes: Int = 0,

@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -40,6 +41,7 @@ fun PodcastApp() {
     PodcastAppTheme {
         Scaffold(
             modifier = Modifier
+                .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
                 .fillMaxSize(),

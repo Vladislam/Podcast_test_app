@@ -15,6 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.podcastapp.R
+import com.example.podcastapp.destinations.PodcastDetailScreenDestination
+import com.example.podcastapp.ui.common.BestPodcastItem
 import com.example.podcastapp.ui.common.LargeTitle
 import com.example.podcastapp.util.consts.Constants.BOTTOM_NAVIGATION_HEIGHT
 import com.example.podcastapp.util.consts.Constants.GRID_COLUMNS
@@ -36,8 +38,7 @@ fun PodcastScreen(
     if (podcastState.error == null) {
         Surface {
             LazyVerticalGrid(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Fixed(count = GRID_COLUMNS),
                 state = scrollState
             ) {
@@ -45,11 +46,12 @@ fun PodcastScreen(
                     LargeTitle(stringResource(R.string.trending_now))
                 }
                 items(podcastState.bestPodcasts.size) { i ->
+                    val curPodcast = podcastState.bestPodcasts[i]
                     BestPodcastItem(
                         modifier = Modifier.padding(16.dp),
-                        podcast = podcastState.bestPodcasts[i]
+                        podcast = curPodcast
                     ) {
-                        // TODO: Navigate to episodes
+                        navigator.navigate(PodcastDetailScreenDestination(curPodcast.id))
                     }
                 }
                 fullSpanItem {

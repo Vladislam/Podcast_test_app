@@ -11,6 +11,7 @@ data class PodcastResponseDto(
     val episodes: List<EpisodeDto>,
     val image: String,
     val language: String,
+    val publisher: String,
     @SerializedName("explicit_content")
     val explicitContent: Boolean,
     @SerializedName("next_episode_pub_date")

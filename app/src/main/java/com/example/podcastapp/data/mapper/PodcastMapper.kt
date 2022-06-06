@@ -1,6 +1,7 @@
 package com.example.podcastapp.data.mapper
 
 import com.example.podcastapp.data.local.episodes.EpisodeEntity
+import com.example.podcastapp.data.local.episodes.PodcastEntity
 import com.example.podcastapp.data.local.episodes.PodcastWithEpisodes
 import com.example.podcastapp.data.remote.dto.podcast.EpisodeDto
 import com.example.podcastapp.data.remote.dto.podcast.PodcastResponseDto
@@ -24,7 +25,7 @@ fun EpisodeDto.toEpisode(): Episode = Episode(
     description = description
 )
 
-fun EpisodeDto.toEpisodeEntity(): EpisodeEntity = EpisodeEntity(
+fun EpisodeDto.toEpisodeEntity(podcastId: String): EpisodeEntity = EpisodeEntity(
     audio = audio,
     audioLengthSec = audioLengthSec,
     explicitContent = explicitContent,
@@ -34,7 +35,8 @@ fun EpisodeDto.toEpisodeEntity(): EpisodeEntity = EpisodeEntity(
     thumbnail = thumbnail,
     title = title,
     maybeAudioInvalid = maybeAudioInvalid,
-    description = description
+    description = description,
+    podcastId = podcastId,
 )
 
 fun SearchPodcastDto.toSearchPodcast(): SearchPodcast = SearchPodcast(
@@ -87,6 +89,19 @@ fun PodcastResponseDto.toPodcast(): Podcast = Podcast(
     thumbnail = thumbnail,
     title = title,
     episodes = episodes.map { it.toEpisode() },
+    image = image,
+    language = language,
+    explicitContent = explicitContent,
+    nextEpisodePubDate = nextEpisodePubDate,
+    totalEpisodes = totalEpisodes,
+    audioLengthSec = audioLengthSec
+)
+
+fun PodcastResponseDto.toPodcastEntity(): PodcastEntity = PodcastEntity(
+    id = id,
+    description = description,
+    thumbnail = thumbnail,
+    title = title,
     image = image,
     language = language,
     explicitContent = explicitContent,

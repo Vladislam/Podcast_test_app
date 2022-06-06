@@ -16,7 +16,7 @@ fun LargeTitle(title: String) {
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .padding(bottom = 32.dp)
-            .height(120.dp),
+            .height(70.dp),
     ) {
         Text(
             title,
