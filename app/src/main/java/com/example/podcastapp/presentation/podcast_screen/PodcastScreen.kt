@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.podcastapp.R
 import com.example.podcastapp.destinations.PodcastDetailScreenDestination
-import com.example.podcastapp.ui.common.BestPodcastItem
+import com.example.podcastapp.ui.podcast.BestPodcastItem
 import com.example.podcastapp.ui.common.LargeTitle
 import com.example.podcastapp.util.consts.Constants.BOTTOM_NAVIGATION_HEIGHT
 import com.example.podcastapp.util.consts.Constants.GRID_COLUMNS

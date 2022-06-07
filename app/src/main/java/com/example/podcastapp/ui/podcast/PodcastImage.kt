@@ -1,4 +1,4 @@
-package com.example.podcastapp.ui.common
+package com.example.podcastapp.ui.podcast
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.podcastapp.ui.common
+package com.example.podcastapp.ui.podcast
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -54,7 +55,8 @@ fun EpisodeItem(
             .fillMaxWidth()
             .background(MaterialTheme.colors.background)
             .clickable { onClick(episode) }
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -66,7 +68,7 @@ fun EpisodeItem(
             error = painterResource(R.drawable.ic_microphone),
             fallback = painterResource(R.drawable.ic_microphone),
             modifier = Modifier
-                .size(46.dp)
+                .size(64.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colors.onBackground.copy(alpha = 0.08f))
         )

@@ -51,7 +51,7 @@ fun BottomNavigationBar(
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                MaterialTheme.colors.background.copy(alpha = 0.70f),
+                                MaterialTheme.colors.background.copy(alpha = 0.80f),
                                 MaterialTheme.colors.background,
                             )
                         )
