@@ -1,4 +1,4 @@
-package com.example.podcastapp.data.exoplayer
+package com.example.podcastapp.data.service
 
 import android.app.PendingIntent
 import android.os.Bundle
