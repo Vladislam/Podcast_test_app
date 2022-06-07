@@ -10,4 +10,5 @@
     <string name="minutes_template">%s min</string>
     <string name="share">Share</string>
     <string name="back">Back</string>
+    <string name="share_podcast_content">Take a look at this podcast: %1$s %2$s</string>
 </resources>

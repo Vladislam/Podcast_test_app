@@ -15,6 +15,7 @@ data class PodcastEntity(
     val totalEpisodes: Int = 0,
     val audioLengthSec: Int = 0,
     val publisher: String = "",
+    val website: String = "",
     val listenNotesUrl: String = "",
     val firstPubDateMs: Long = 0L,
     @PrimaryKey

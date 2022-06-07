@@ -12,6 +12,7 @@ data class PodcastResponseDto(
     val image: String,
     val language: String,
     val publisher: String,
+    val website: String,
     @SerializedName("listennotes_url")
     val listenNotesUrl: String,
     @SerializedName("earliest_pub_date_ms")

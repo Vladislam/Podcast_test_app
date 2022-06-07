@@ -1,10 +1,11 @@
 package com.example.podcastapp.presentation.detail_podcast_screen
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,21 +40,16 @@ fun PodcastDetailScreen(
     val podcastState = viewModel.podcastState
     val scrollState = rememberLazyListState()
 
-    Scaffold(
-
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        state = scrollState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(), state = scrollState
-        ) {
-            item {
-                PodcastHeader(podcast = podcastState.podcast, navigator = navigator)
-            }
+        item {
+            PodcastHeader(podcast = podcastState.podcast, navigator = navigator)
+        }
 
-            items(podcastState.podcast.episodes.size) { i ->
-                EpisodeItem(episode = podcastState.podcast.episodes[i], onClick = {})
-            }
+        items(podcastState.podcast.episodes.size) { i ->
+            EpisodeItem(episode = podcastState.podcast.episodes[i], onClick = {})
         }
     }
 }
@@ -62,6 +59,7 @@ fun PodcastHeader(
     podcast: Podcast,
     navigator: DestinationsNavigator
 ) {
+    val context = LocalContext.current
 
     Column {
         Row(
@@ -83,7 +81,20 @@ fun PodcastHeader(
                 contentDescription = stringResource(id = R.string.share),
                 modifier = Modifier.weight(1f)
             ) {
-                // TODO: Share the podcast
+                val text = context.getString(
+                    R.string.share_podcast_content,
+                    podcast.title,
+                    podcast.listenNotesUrl
+                )
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, podcast.title)
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    type = "text/plain"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                context.startActivity(shareIntent)
             }
         }
         Column(
@@ -108,7 +119,8 @@ fun PodcastHeader(
                     imageVector = Icons.Rounded.Info,
                     contentDescription = stringResource(R.string.share),
                 ) {
-                    //TODO: Open the Listen Notes
+                    val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(podcast.website))
+                    context.startActivity(webIntent)
                 }
             }
 
