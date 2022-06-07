@@ -10,4 +10,6 @@ object Constants {
     const val SEARCH_TYPE = "podcast"
 
     const val PODCAST_ID_SAVED_STATE_TAG = "podcastId"
+
+    const val ACTION_PODCAST_NOTIFICATION_CLICK = "ACTION_PODCAST_NOTIFICATION_CLICK"
 }
