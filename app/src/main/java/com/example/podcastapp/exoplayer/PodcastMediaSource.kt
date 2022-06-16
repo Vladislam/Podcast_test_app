@@ -89,6 +89,11 @@ class PodcastMediaSource @Inject constructor() {
             true
         }
     }
+
+    fun refresh() {
+        onReadyListeners.clear()
+        state = CREATED
+    }
 }
 
 typealias OnReadyListener = (Boolean) -> Unit

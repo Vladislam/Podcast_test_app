@@ -1,6 +1,7 @@
 package com.example.podcastapp.data.service
 
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -13,6 +14,8 @@ import com.example.podcastapp.exoplayer.callback.PodcastPlaybackPreparer
 import com.example.podcastapp.exoplayer.callback.PodcastPlayerNotificationListener
 import com.example.podcastapp.util.consts.Constants.ACTION_PODCAST_NOTIFICATION_CLICK
 import com.example.podcastapp.util.consts.Constants.MEDIA_ROOT_ID
+import com.example.podcastapp.util.consts.Constants.REFRESH_MEDIA_BROWSER_ACTION
+import com.example.podcastapp.util.consts.Constants.START_MEDIA_ACTION
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
@@ -100,6 +103,24 @@ class PodcastService @Inject constructor(
         exoPlayer.setMediaSource(podcastMediaSource.asMediaSource(dataSourceFactory))
         exoPlayer.seekTo(indexToPlay, 0L)
         exoPlayer.playWhenReady = playNow
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return Service.START_STICKY
+    }
+
+    override fun onCustomAction(action: String, extras: Bundle?, result: Result<Bundle>) {
+        super.onCustomAction(action, extras, result)
+        when (action) {
+            START_MEDIA_ACTION -> {
+                podcastNotificationManager.showNotification(exoPlayer)
+            }
+            REFRESH_MEDIA_BROWSER_ACTION -> {
+                podcastMediaSource.refresh()
+                notifyChildrenChanged(MEDIA_ROOT_ID)
+            }
+            else -> Unit
+        }
     }
 
     override fun onGetRoot(

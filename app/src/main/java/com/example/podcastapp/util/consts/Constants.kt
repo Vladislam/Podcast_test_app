@@ -17,4 +17,7 @@ object Constants {
     const val NOTIFICATION_ID = 541235
 
     const val MEDIA_ROOT_ID = "root_id"
+
+    const val START_MEDIA_ACTION = "START_MEDIA_ACTION"
+    const val REFRESH_MEDIA_BROWSER_ACTION = "REFRESH_MEDIA_BROWSER_ACTION"
 }
