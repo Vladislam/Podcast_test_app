@@ -15,4 +15,6 @@ object Constants {
 
     const val NOTIFICATION_CHANNEL_ID = "4329194659074cc7aa147224a7877bb9"
     const val NOTIFICATION_ID = 541235
+
+    const val MEDIA_ROOT_ID = "root_id"
 }
