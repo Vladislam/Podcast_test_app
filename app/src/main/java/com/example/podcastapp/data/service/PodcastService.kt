@@ -3,9 +3,12 @@ package com.example.podcastapp.data.service
 import android.app.PendingIntent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.example.podcastapp.exoplayer.PodcastMediaSource
 import com.example.podcastapp.exoplayer.PodcastNotificationManager
+import com.example.podcastapp.exoplayer.callback.PodcastPlaybackPreparer
 import com.example.podcastapp.exoplayer.callback.PodcastPlayerNotificationListener
 import com.example.podcastapp.util.consts.Constants.ACTION_PODCAST_NOTIFICATION_CLICK
 import com.google.android.exoplayer2.ExoPlayer
@@ -21,7 +24,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PodcastService @Inject constructor(
     private val dataSourceFactory: CacheDataSource.Factory,
-    private val expPlayer: ExoPlayer
+    private val exoPlayer: ExoPlayer,
+    private val podcastMediaSource: PodcastMediaSource
 ) : MediaBrowserServiceCompat() {
 
     private val serviceJob = Job()
@@ -31,10 +35,15 @@ class PodcastService @Inject constructor(
     private lateinit var mediaSessionConnector: MediaSessionConnector
     private lateinit var podcastNotificationManager: PodcastNotificationManager
 
+    private var currentPlayingMedia: MediaMetadataCompat? = null
+
     var isForeground = false
 
     companion object {
         private const val SERVICE_TAG = "PodcastService"
+
+        var currentDuration: Long = 0L
+            private set
     }
 
     override fun onCreate() {
@@ -60,11 +69,33 @@ class PodcastService @Inject constructor(
         podcastNotificationManager = PodcastNotificationManager(
             this, mediaSession.sessionToken, PodcastPlayerNotificationListener(this)
         ) {
-
+            currentDuration = exoPlayer.duration
         }
 
-        mediaSessionConnector = MediaSessionConnector(mediaSession)
-        mediaSessionConnector.setPlayer(expPlayer)
+        val podcastPlaybackPreparer = PodcastPlaybackPreparer(podcastMediaSource) {
+            currentPlayingMedia = it
+            preparePlayer(
+                podcastMediaSource.mediaMetadataEpisodes,
+                it,
+                true
+            )
+        }
+
+        mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
+            setPlaybackPreparer(podcastPlaybackPreparer)
+            setPlayer(exoPlayer)
+        }
+    }
+
+    private fun preparePlayer(
+        episodes: List<MediaMetadataCompat>,
+        itemToPlay: MediaMetadataCompat?,
+        playNow: Boolean
+    ) {
+        val indexToPlay = if (currentPlayingMedia == null) 0 else episodes.indexOf(itemToPlay)
+        exoPlayer.setMediaSource(podcastMediaSource.asMediaSource(dataSourceFactory))
+        exoPlayer.seekTo(indexToPlay, 0L)
+        exoPlayer.playWhenReady = playNow
     }
 
     override fun onGetRoot(
