@@ -11,4 +11,7 @@
     <string name="share">Share</string>
     <string name="back">Back</string>
     <string name="share_podcast_content">Take a look at this podcast: %1$s %2$s</string>
+    <string name="notification_channel_name">Podcasts</string>
+    <string name="notification_channel_description">Notification for Podcast App</string>
+    <string name="info">Info</string>
 </resources>

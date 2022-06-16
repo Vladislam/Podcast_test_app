@@ -117,7 +117,7 @@ fun PodcastHeader(
                 )
                 CustomIconButton(
                     imageVector = Icons.Rounded.Info,
-                    contentDescription = stringResource(R.string.share),
+                    contentDescription = stringResource(R.string.info),
                 ) {
                     val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(podcast.website))
                     context.startActivity(webIntent)

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.example.podcastapp.exoplayer.PodcastNotificationManager
+import com.example.podcastapp.exoplayer.callback.PodcastPlayerNotificationListener
 import com.example.podcastapp.util.consts.Constants.ACTION_PODCAST_NOTIFICATION_CLICK
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -27,6 +29,9 @@ class PodcastService @Inject constructor(
 
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
+    private lateinit var podcastNotificationManager: PodcastNotificationManager
+
+    var isForeground = false
 
     companion object {
         private const val SERVICE_TAG = "PodcastService"
@@ -51,6 +56,12 @@ class PodcastService @Inject constructor(
         }
 
         sessionToken = mediaSession.sessionToken
+
+        podcastNotificationManager = PodcastNotificationManager(
+            this, mediaSession.sessionToken, PodcastPlayerNotificationListener(this)
+        ) {
+
+        }
 
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlayer(expPlayer)
